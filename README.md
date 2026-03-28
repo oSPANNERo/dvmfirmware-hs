@@ -1,6 +1,6 @@
 # Digital Voice Modem Firmware (Hotspot)
 
-The DVM hotspot firmware provides the embedded microcontroller implementation of a dedicated-mode DMR, P25 or NXDN hotspot system. The firmware; is the portion of a complete Over-The-Air modem implementation that uses an ADF7021 to provide a raw RF interface.
+The DVM hotspot firmware provides the embedded microcontroller implementation of a dedicated-mode DMR, P25 or NXDN hotspot system. The firmware is the portion of a complete Over-The-Air modem implementation that uses an ADF7021 to provide a raw RF interface.
 
 This project is a direct fork of the MMDVM_HS (https://github.com/juribeparada/MMDVM_HS) project.
 
