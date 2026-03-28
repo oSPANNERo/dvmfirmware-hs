@@ -6,51 +6,74 @@ This project is a direct fork of the MMDVM_HS (https://github.com/juribeparada/M
 
 Please feel free to reach out to us for help, comments or otherwise, on our Discord: https://discord.gg/3pBe8xgrEz
 
+> **_NOTE:_**  Before beginning the firmware update process please see the various Makefile's included in the project for more information. This project includes a few Makefiles to target different hardware. (All following information assumes familiarity with the standard Linux make system.)
+
+  - EG: Makefile.STM32FX - This makefile is used for targeting a generic STM32F103 with an ADF7021 RF SoC device.
+  
+
 ## Building
 
-Please see the various Makefile's included in the project for more information. This project includes a few Makefiles to target different hardware. (All following information assumes familiarity with the standard Linux make system.)
+* For STM32F103 using Ubuntu based OS, install the standard ARM embedded toolchain (typically arm-gcc-none-eabi).
 
-* Makefile.STM32FX - This makefile is used for targeting a generic STM32F103 with an ADF7021 RF SoC device.
+  - ```sudo apt install gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential```
 
-* For STM32F103 using Ubuntu OS install the standard ARM embedded toolchain (typically arm-gcc-none-eabi).
-  - Make sure to clone this repository with the ```--recurse-submodules``` option, otherwise the STM32 platform files will be missing! ```git clone --recurse-submodules https://github.com/DVMProject/dvmfirmware-hs.git```
+* From the directory of your choosing clone this repository. It will create a folder named dvmfirmeare-hs. Ensure that when you clone you are using the ```--recurse-submodules``` option, otherwise the STM32 platform files will be missing! 
 
-To build the firmware, use the ```make``` command, followed by -f and the correct makefile, followed by the type of board you are using. 
+  - ```git clone --recurse-submodules https://github.com/DVMProject/dvmfirmware-hs.git```
 
-An example of this would be ```make -f Makefile.STM32FX mmdvm-hs-hat-dual``` for a full duplex modem hotspot, attached to GPIO.
+* To build the firmware, use the ```make``` command, followed by -f and the correct makefile, followed by the type of board you are using. 
 
-## Firmware installation
+  - EG: ```make -f Makefile.STM32FX mmdvm-hs-hat-dual``` for a full duplex modem hotspot, attached to GPIO.
 
-The device can be used on top on a RPi attached via the GPIO port or standalone and connected via USB (see usb-support branch). Both variants require different handling of compiling and uploading the firmware, examples on flashing devices are mostly not included here because the methods to flash vary from device to device.
+## Raspberry Pi Preparation Notes
+
+Some extra notes for those who are using the Raspberry Pi, default Raspbian OS or Debian OS installations. You will not be able to flash or access the STM32 modem unless you do some things beforehand.
+
+1. Disable the Bluetooth services. Bluetooth will share the GPIO serial interface on `/dev/ttyAMA0`. On Rasbian OS or Debian OS, this is done by: `sudo systemctl disable bluetooth` then adding `dtoverlay=disable-bt` to `/boot/config.txt`.
+1. The default Rasbian OS and Debian OS will have a getty instance listening on `/dev/ttyAMA0`. This can conflict with the STM32, and is best if disabled. On Rasbian OS or Debian OS, this is done by: `systemctl disable serial-getty@ttyAMA0.service`
+1. On modern OS version (Bookworm / Debian 12.0 or newer), the getty instance on `/dev/ttyAMA0` gets rebuilt on boot via a systemd generator, even if you've already disabled it.  You'll need to disable this generator with: `sudo systemctl mask serial-getty@ttyAMA0.service`
+1. There's a default boot option which is also listening on the GPIO serial interface. This **must be disabled**. Open the `/boot/cmdline.txt` file in your favorite editor (vi or pico) and remove the `console=serial0,115200` part.
+
+The steps above can be done by the following commands:
+
+```shell
+sudo systemctl disable bluetooth.service serial-getty@ttyAMA0.service
+sudo systemctl mask serial-getty@ttyAMA0.service
+grep '^dtoverlay=disable-bt' /boot/config.txt || echo 'dtoverlay=disable-bt' | sudo tee -a /boot/config.txt
+sudo sed -i 's/^console=serial0,115200 *//' /boot/cmdline.txt
+```
+
+After finishing these steps, reboot.
 
 ### Install the firmware via GPIO on Raspberry Pi
 
 > **_NOTE:_**  Your mileage may vary with these instructions, the hotspot boards are loosely designed around a common factor but not all are created equally.
 
-First you will need to disable the serial console and disable bluetooth. Edit ```/boot/cmdline.txt``` and remove the line ```console=serial0, 115200```.
-Next, you will need to disable bluetooth on the board. Edit ```/boot/config.txt``` and add a line containing ```dtoverlay=disable-bt```. Reboot.
-
 > Most sets of instructions reccomend to download stm32flash from online, however we have found the prepackaged version to work fine.
 
-Once the hotspot is back on, navigate to the build folder where you compiled the firmware. Put a jumper across the J1 points on the board, and the RED heartbeat LED should stop flashing. Run the below command to flash. Sudo is required on most systems to access GPIO pins.
+Once the hotspot is back on, install stm32flash:
+```sudo apt install stm32flash```
 
-```sudo stm32flash -v -w dvm-firmware-hs_f1.bin -i 20,-21,21,-20 -R /dev/ttyAMA0```
+Once that is complete put a jumper across the JP1 points on the board, and the RED heartbeat LED may or may not stop flashing. This jumper will need to remain for the duration of the firmware upgrade process.
+<!-- Insert image/diagram here(?) -->
 
-Note that on newer raspbian versions, the way GPIO chips are numbered has changed. If you're using raspbian bookworm (debian 12) or greater, use this command instead:
+Once confirmed navigate to the build folder where you compiled the firmware and run the below command to flash. Sudo is required on most systems to access GPIO pins.
 
 ```sudo stm32flash -v -w dvm-firmware-hs_f1.bin -i 532,-533,533,-520 -R /dev/ttyAMA0```
 
-You should see the below output if the board flashed successfully.
+> **_NOTE:_** On legacy raspbian versions , the way GPIO chips are numbered was different. If you're using raspbian Bullseye (Debian 11) or older, use this command instead: ```sudo stm32flash -v -w dvm-firmware-hs_f1.bin -i 20,-21,21,-20 -R /dev/ttyAMA0```
+
+You should see a result similar to the below output if the board flashed successfully.
 ```
-Wrote and verified address 0x0800be40 (100.00%) Done.
+Wrote and verified address 0x0800deec (100.00%) Done.
 
 Resetting device... 
 Reset done.
 ```
+There are reports that when using MMDVM Duplex Hats (such as the AURSINC) JP1 can remain jumpered during normal operation if you do not wish to de-solder for ease of future updating. As we cannot guarantee this will remain true this decision will remain at the discretion of the end user. (If unexpected behavior is experienced, first step would be de-solder JP1 and see if the concern is resolved.)
 
 ## Notes
 
-**USB Support Note**: See the usb-support branch for the version of this firmware that supports USB.
 **NXDN Support Note**: NXDN support is currently experimental.
 
 ## License
