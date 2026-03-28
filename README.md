@@ -54,7 +54,7 @@ Once the hotspot is back on, install stm32flash:
 
   - ```sudo apt install stm32flash```
 
-Once that is complete put a jumper across the JP1 points on the board. This jumper will need to remain for the duration of the firmware upgrade process. Once the jumper is in place wait a few seconds before proceeding. (The RED heartbeat LED may or may not stop flashing.)
+Once that is complete put a jumper across the JP1 points on the board. This jumper will need to remain for the duration of the firmware upgrade process. Once the jumper is in place wait a few seconds before proceeding. (The RED heartbeat LED may or may not stop flashing depending on the actual hardware you are using.)
 
 <img src=https://github.com/user-attachments/assets/220b2e12-61b6-429e-98cc-a489918c0aad>
 
