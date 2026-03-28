@@ -60,7 +60,7 @@ Once that is complete put a jumper across the JP1 points on the board. This jump
 
   - Image credit to [DF2ET](https://github.com/phl0)
 
-Once confirmed navigate to the build folder where you compiled the firmware and run the below command to flash. Sudo is required on most systems to access GPIO pins.
+Once confirmed navigate to the build folder where you compiled the firmware and run the below command to flash. (Sudo is required on most systems to access GPIO pins.)
 
   - ```sudo stm32flash -v -w dvm-firmware-hs_f1.bin -i 532,-533,533,-520 -R /dev/ttyAMA0```
 
