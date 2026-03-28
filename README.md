@@ -73,7 +73,7 @@ Wrote and verified address 0x0800deec (100.00%) Done.
 Resetting device... 
 Reset done.
 ```
-There are reports that when using MMDVM Duplex Hats (such as the AURSINC) JP1 can remain jumpered during normal operation if you do not wish to de-solder for ease of future updating. As we cannot guarantee this will remain true this decision will remain at the discretion of the end user. (If unexpected behavior is experienced, first step would be de-solder JP1 and see if the concern is resolved.)
+There are reports that when using MMDVM Duplex Hats (such as the AURSINC) with a Raspberry PI JP1 can remain jumpered during even during normal operation if you do not wish to de-solder for ease of future updating. As we cannot guarantee this will remain true this decision will remain at the discretion of the end user. (If unexpected behavior is experienced, our recommended first step would be de-solder JP1 and see if the concern is resolved.)
 
 ## Notes
 
