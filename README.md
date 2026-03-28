@@ -48,7 +48,7 @@ After finishing these steps, reboot.
 
 > **_NOTE:_**  Your mileage may vary with these instructions, the hotspot boards are loosely designed around a common factor but not all are created equally.
 
-> Most sets of instructions reccomend to download stm32flash from online, however we have found the prepackaged version to work fine.
+> **_NOTE:_**  Most sets of instructions reccomend to download stm32flash from online, however we have found the prepackaged version to work fine.
 
 Once the hotspot is back on, install stm32flash:
 
@@ -65,7 +65,7 @@ Once confirmed navigate to the build folder where you compiled the firmware and 
 
 ```sudo stm32flash -v -w dvm-firmware-hs_f1.bin -i 532,-533,533,-520 -R /dev/ttyAMA0```
 
-> **_NOTE:_** On legacy raspbian versions , the way GPIO chips are numbered was different. If you're using raspbian Bullseye (Debian 11) or older, use this command instead: ```sudo stm32flash -v -w dvm-firmware-hs_f1.bin -i 20,-21,21,-20 -R /dev/ttyAMA0```
+> **_NOTE:_**  On legacy raspbian versions , the way GPIO chips are numbered was different. If you're using raspbian Bullseye (Debian 11) or older, use this command instead: ```sudo stm32flash -v -w dvm-firmware-hs_f1.bin -i 20,-21,21,-20 -R /dev/ttyAMA0```
 
 You should see a result similar to the below output if the board flashed successfully.
 ```
