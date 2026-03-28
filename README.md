@@ -7,10 +7,8 @@ This project is a direct fork of the MMDVM_HS (https://github.com/juribeparada/M
 Please feel free to reach out to us for help, comments or otherwise, on our Discord: https://discord.gg/3pBe8xgrEz
 
 > **_NOTE:_**  Before beginning the firmware update process please see the various Makefile's included in the project for more information. This project includes a few Makefiles to target different hardware. (All following information assumes familiarity with the standard Linux make system.)
-
-  - EG: Makefile.STM32FX - This makefile is used for targeting a generic STM32F103 with an ADF7021 RF SoC device.
+- EG: Makefile.STM32FX - This makefile is used for targeting a generic STM32F103 with an ADF7021 RF SoC device.
   
-
 ## Building
 
 * For STM32F103 using Ubuntu based OS, install the standard ARM embedded toolchain (typically arm-gcc-none-eabi).
