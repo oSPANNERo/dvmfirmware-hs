@@ -54,12 +54,11 @@ Once the hotspot is back on, install stm32flash:
 
   - ```sudo apt install stm32flash```
 
-Once that is complete put a jumper across the JP1 points on the board, and the RED heartbeat LED may or may not stop flashing. This jumper will need to remain for the duration of the firmware upgrade process.
+Once that is complete put a jumper across the JP1 points on the board. This jumper will need to remain for the duration of the firmware upgrade process. Once the jumper is in place wait a few seconds before proceeding. (The RED heartbeat LED may or may not stop flashing.)
 
 <img src=https://github.com/user-attachments/assets/220b2e12-61b6-429e-98cc-a489918c0aad>
 
   - Image credit to [DF2ET](https://github.com/phl0)
-
 
 Once confirmed navigate to the build folder where you compiled the firmware and run the below command to flash. Sudo is required on most systems to access GPIO pins.
 
