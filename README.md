@@ -52,7 +52,7 @@ After finishing these steps, reboot.
 
 Once the hotspot is back on, install stm32flash:
 
-```sudo apt install stm32flash```
+  - ```sudo apt install stm32flash```
 
 Once that is complete put a jumper across the JP1 points on the board, and the RED heartbeat LED may or may not stop flashing. This jumper will need to remain for the duration of the firmware upgrade process.
 
