@@ -58,8 +58,6 @@ Once that is complete put a jumper across the JP1 points on the board, and the R
 
 <img src=https://github.com/user-attachments/assets/220b2e12-61b6-429e-98cc-a489918c0aad>
 
-[MMDVM_DUPLEX_JP1](https://github.com/user-attachments/assets/220b2e12-61b6-429e-98cc-a489918c0aad)
-
   - Image credit to [DF2ET](https://github.com/phl0)
 
 
