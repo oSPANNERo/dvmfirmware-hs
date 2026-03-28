@@ -55,7 +55,9 @@ Once the hotspot is back on, install stm32flash:
 ```sudo apt install stm32flash```
 
 Once that is complete put a jumper across the JP1 points on the board, and the RED heartbeat LED may or may not stop flashing. This jumper will need to remain for the duration of the firmware upgrade process.
-<!-- Insert image/diagram here(?) -->
+[MMDVM_DUPLEX_JP1](https://github.com/user-attachments/assets/220b2e12-61b6-429e-98cc-a489918c0aad)
+Image credit to @phl0
+
 
 Once confirmed navigate to the build folder where you compiled the firmware and run the below command to flash. Sudo is required on most systems to access GPIO pins.
 
